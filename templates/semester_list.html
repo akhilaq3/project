@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Year {{ year }} Semester {{ semester }} Subjects | {{ super() }}{% endblock %}
+
+{% block content %}
+{# Use standard container or specific list-container if overrides needed #}
+<div class="container">
+
+    {# Flash messages handled by base.html #}
+
+    <h1>Year {{ year }} Semester {{ semester }} Subjects</h1>
+
+    {% if subjects %}
+        {# Add specific class to the ul #}
+        <ul class="item-list">
+            {% for subj in subjects %}
+                <li>
+                    <a href="{{ url_for('subject_detail_view', year=year, semester=semester, subject=subj['subject']) }}">
+                        {{ subj['subject'] }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {# Use the specific class for no items #}
+        <p class="no-items">No subjects found for this semester.</p>
+    {% endif %}
+
+    {# Use standard back link style #}
+    <div class="list-back-link-container"> {# Optional wrapper for centering #}
+        <a href="{{ url_for('year_view', year_num=year) }}" class="back-link">« Back to Year {{ year }}</a>
+    </div>
+
+</div> {# End container #}
+{% endblock %}

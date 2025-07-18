@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Result: {{ subject }} Unit {{ unit }} | {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="result-container"> {# Use specific container class #}
+
+    {# Flash messages handled by base.html #}
+
+    <h1>Quiz Result</h1>
+    <h2>{{ subject }} - Year {{ year }}, Semester {{ semester }}, Unit {{ unit }}</h2>
+
+    <p class="overall-score"><strong>Overall Score for this Unit: {{ unit_score }} / {{ unit_total }}</strong></p>
+
+    <h2>Detailed Feedback:</h2>
+
+    {% if detailed_results %}
+        {% for result in detailed_results %}
+            {# Add correct/incorrect class directly here #}
+            <div class="question-result {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+                <p><strong>Question {{ result.question_number }}:</strong> {{ result.question_text | safe }}</p>
+                <ul>
+                    {% for i in range(1, 5) %}
+                        {% set option_text = result['option' ~ i] %}
+                        {% if option_text is not none %}
+                            {# Add user-answer and correct-answer classes conditionally #}
+                            <li class=" {% if i == result.user_answer_num %}user-answer{% endif %} {% if i == result.correct_answer_num %}correct-answer{% endif %} ">
+                                {{ option_text | safe }}
+                                {# Use spans with classes for indicators #}
+                                {% if i == result.user_answer_num and i != result.correct_answer_num %}
+                                    <span class="answer-indicator incorrect-indicator">[Your Incorrect Answer]</span>
+                                {% elif i == result.user_answer_num and i == result.correct_answer_num %}
+                                    <span class="answer-indicator correct-indicator">[Your Correct Answer]</span>
+                                {% elif i == result.correct_answer_num %}
+                                     <span class="answer-indicator correct-indicator">[Correct Answer]</span>
+                                {% endif %}
+                            </li>
+                         {% endif %}
+                    {% endfor %}
+                </ul>
+                 {# Add feedback classes #}
+                 <p class="feedback {% if result.is_correct %}correct-feedback{% else %}incorrect-feedback{% endif %}">
+                     <strong>Result:</strong>
+                     {% if result.is_correct %}
+                         Correct!
+                     {% else %}
+                         Incorrect.
+                         {% if result.user_answer_text %}
+                             You answered: "{{ result.user_answer_text | safe }}".
+                         {% elif result.user_answer_num is none %}
+                             You did not select an answer.
+                         {% else %}
+                             Invalid answer selected.
+                         {% endif %}
+                         Correct answer was: "{{ result.correct_answer_text | safe }}".
+                     {% endif %}
+                 </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        {# Use the more general no-items class or keep specific one if needed #}
+        <p class="no-items">Detailed results could not be generated.</p>
+    {% endif %}
+
+    {# Use specific class for navigation links container #}
+    <div class="result-navigation-links">
+        <a href="{{ url_for('subject_detail_view', year=year, semester=semester, subject=subject) }}">Back to {{ subject }} Details</a>
+        <a href="{{ url_for('dashboard') }}">Go to Dashboard</a>
+        <a href="{{ url_for('my_performance') }}">View Performance Summary</a>
+    </div>
+
+</div> {# End result-container #}
+{% endblock %}

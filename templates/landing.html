@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome | {{ super() }}{% endblock %}
+
+{# Add class to body tag to hide standard header on this page ONLY #}
+{% block body_attributes %}class="body-landing"{% endblock %}
+
+{% block content %}
+
+    {# Landing Page Hero Section #}
+    <div class="landing-hero">
+        <div class="container"> {# Container for title/buttons #}
+            <h1 class="landing-title">E-learning Platform & Personalized Student Performance Tracker</h1>
+            <p class="landing-tagline">Your Gateway to Focused Learning and Personalized Progress.</p>
+            <div class="landing-actions">
+                <a href="{{ url_for('login') }}" class="button button-large button-login">Login</a>
+                <a href="{{ url_for('register') }}" class="button button-large button-register">Register</a>
+            </div>
+        </div> {# End Container #}
+    </div> {# End landing-hero #}
+
+    {# *** Features Section MOVED BACK OUTSIDE hero *** #}
+    <section class="features-section">
+        <div class="container"> {# Features uses its own container #}
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>Courses</h3>
+                    <p>Explore well-organized video lectures and reading materials.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Personalized Tracking</h3>
+                    <p>Monitor your progress with insightful performance dashboards.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Accessible Anywhere</h3>
+                    <p>Learn at your own pace, on any device, anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {# *** END Features Section *** #}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{# Override the title block for this specific page #}
+{% block title %}Login | {{ super() }}{% endblock %}
+
+{# This page does NOT get the 'body-landing' class #}
+
+{# Define the main content block for the login page #}
+{% block content %}
+<div class="auth-container">
+    <h2>Login</h2> {# Use H2 now as H1 is in base/landing #}
+
+    {# Flash messages are handled in base.html.
+       This specific 'error' block is only needed if you pass a variable named 'error'
+       directly via render_template, which is less common now we use flash messages.
+       You can often remove this 'if error' block if only using flash messages. #}
+    {% if error %}
+        <ul class="flashes"><li class="error">{{ error }}</li></ul>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('login') }}"> {# Ensure action points to login route #}
+        {# Add labels for accessibility (optional but recommended) #}
+        <label for="username" class="visually-hidden">Username</label> {# Use visually-hidden class if you don't want label text shown #}
+        <input type="text" id="username" name="username" placeholder="Username" required>
+
+        <label for="password" class="visually-hidden">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+
+        <button type="submit" class="button-fullwidth">Login</button>
+    </form>
+
+    <a href="{{ url_for('register') }}" class="form-link">Don't have an account? Register</a>
+</div>
+{% endblock %}
+
+{# Optional: Add CSS for visually-hidden labels if you use them
+   Add this to your style.css:
+   .visually-hidden {
+       position: absolute;
+       width: 1px;
+       height: 1px;
+       padding: 0;
+       margin: -1px;
+       overflow: hidden;
+       clip: rect(0, 0, 0, 0);
+       white-space: nowrap;
+       border: 0;
+   }
+#}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz: {{ subject }} - Unit {{ unit }} | {{ super() }}{% endblock %}
+
+{% block content %}
+{# Use the specific quiz container class #}
+<div class="quiz-container">
+
+    {# Flash messages handled by base.html #}
+
+    <h1>Quiz: {{ subject }} - Unit {{ unit }}</h1>
+
+    {% if questions %}
+        <div id="quiz">
+            <form id="quiz-form" method="POST" action="{{ url_for('submit_quiz') }}">
+                {# Hidden fields remain the same #}
+                <input type="hidden" name="year" value="{{ year }}">
+                <input type="hidden" name="semester" value="{{ semester }}">
+                <input type="hidden" name="subject" value="{{ subject }}">
+                <input type="hidden" name="unit" value="{{ unit }}">
+
+                {% for question in questions %}
+                    {# Keep the question and options classes #}
+                    <div class="question">
+                        <p><strong>Question {{ question.question_number }}:</strong> {{ question.question_text | safe }}</p>
+                        <div class="options">
+                            {% if question.option1 is not none %}
+                            <label><input type="radio" name="q_{{ question.question_number }}" value="1" required> {{ question.option1 | safe }}</label>
+                            {% endif %}
+                            {% if question.option2 is not none %}
+                            <label><input type="radio" name="q_{{ question.question_number }}" value="2" required> {{ question.option2 | safe }}</label>
+                            {% endif %}
+                            {% if question.option3 is not none %}
+                            <label><input type="radio" name="q_{{ question.question_number }}" value="3" required> {{ question.option3 | safe }}</label>
+                            {% endif %}
+                            {% if question.option4 is not none %}
+                            <label><input type="radio" name="q_{{ question.question_number }}" value="4" required> {{ question.option4 | safe }}</label>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {# Use the specific submit button class #}
+                <button class="submit-quiz-button" type="submit">Submit Quiz</button>
+            </form>
+        </div>
+
+        {# Use the simple text back link style #}
+        <div style="margin-top: 30px;"> {# Add some space above the link #}
+             <a class="back-link" href="{{ url_for('subject_detail_view', year=year, semester=semester, subject=subject) }}">
+                « Back to {{ subject }} Details
+            </a>
+        </div>
+
+    {% else %}
+        {# Keep the no-questions class #}
+        <p class="no-questions">No quiz questions are available for this unit at the moment, or there was an error loading them.</p>
+
+        {# Use the simple text back link style #}
+         <div style="margin-top: 30px;">
+             <a class="back-link" href="{{ url_for('subject_detail_view', year=year, semester=semester, subject=subject) }}">
+                « Back to {{ subject }} Details
+            </a>
+         </div>
+    {% endif %}
+
+</div> {# End quiz-container #}
+{% endblock %}

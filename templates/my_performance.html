@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}My Performance | {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="container"> {# Use the standard container #}
+
+    {# Flash messages handled by base.html #}
+
+    <h1>My Performance Summary</h1>
+
+    {% if performance_data %}
+        {# Add the specific class to the table #}
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Semester</th>
+                    <th>Subject</th>
+                    <th>Total Score Achieved</th>
+                    <th>Total Questions Possible</th>
+                    <th>Overall Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for perf in performance_data %}
+                    <tr>
+                        <td>{{ perf.year }}</td>
+                        <td>{{ perf.semester }}</td>
+                        <td>{{ perf.subject }}</td>
+                        <td>{{ perf.total_score_achieved }}</td>
+                        <td>{{ perf.total_questions_possible }}</td>
+                        {# Keep the percentage class #}
+                        <td class="percentage">
+                            {% if perf.total_questions_possible and perf.total_questions_possible > 0 %}
+                                {{ "%.1f%%" % (perf.total_score_achieved * 100 / perf.total_questions_possible) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {# Keep the no-data class #}
+        <p class="no-data">You haven't completed any quizzes yet. Your performance summary will appear here once you do.</p>
+    {% endif %}
+
+    {# Use the simple text back link style #}
+    <div style="text-align: center;"> {# Optional: Center the link #}
+        <a href="{{ url_for('dashboard') }}" class="back-link">« Back to Dashboard</a>
+    </div>
+
+</div> {# End container #}
+{% endblock %}

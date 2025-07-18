@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Year {{ year }} Semesters | {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="container"> {# Use the standard container #}
+
+    {# Flash messages handled by base.html #}
+
+    <h1>Year {{ year }} Semesters</h1> {# Standard H1 styling will apply #}
+
+    {# Apply the item-list class to the ul for styling #}
+    <ul class="item-list">
+        <li>
+            {# Links use the generic semester_view endpoint #}
+            <a href="{{ url_for('semester_view', year_num=year, semester_num=1) }}">Semester 1</a>
+        </li>
+        <li>
+            <a href="{{ url_for('semester_view', year_num=year, semester_num=2) }}">Semester 2</a>
+        </li>
+    </ul>
+
+    {# Use standard back link style, potentially centered #}
+    <div class="list-back-link-container"> {# Optional wrapper for centering #}
+        <a href="{{ url_for('dashboard') }}" class="back-link">« Back to Dashboard</a>
+    </div>
+
+</div> {# End container #}
+{% endblock %}

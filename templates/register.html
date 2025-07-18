@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Register | {{ super() }}{% endblock %}
+
+{# This page does NOT get the 'body-landing' class #}
+
+{% block content %}
+<div class="auth-container">
+    <h2>Register</h2> {# Use H2 #}
+
+    {# Flash messages handled in base.html #}
+
+    <form method="post" action="{{ url_for('register') }}"> {# Ensure action points to register route #}
+        {# Add labels for accessibility #}
+        <label for="username" class="visually-hidden">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" value="{{ username or '' }}" required> {# Keeps username on error #}
+
+        <label for="password" class="visually-hidden">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+
+        {# Optional: Add confirm password field later
+        <label for="confirm_password" class="visually-hidden">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+        #}
+
+        <button type="submit" class="button-fullwidth">Register</button>
+    </form>
+
+    <a href="{{ url_for('login') }}" class="form-link">Already have an account? Login</a>
+</div>
+{% endblock %}

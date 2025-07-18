@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    {# Flash messages are now handled in base.html #}
+
+    <h1>Dashboard</h1>
+    <p class="dashboard-greeting">Welcome back, {{ username | capitalize }}!</p>
+
+    <div class="dashboard-links">
+         <h2>Select Your Year</h2>
+         <ul>
+            <li><a href="{{ url_for('year_view', year_num=1) }}">Year 1</a></li>
+            <li><a href="{{ url_for('year_view', year_num=2) }}">Year 2</a></li>
+            <li><a href="{{ url_for('year_view', year_num=3) }}">Year 3</a></li>
+            <li><a href="{{ url_for('year_view', year_num=4) }}">Year 4</a></li>
+        </ul>
+    </div>
+
+    {# dashboard-actions removed as links are now likely in the header nav #}
+    {# If you need specific dashboard actions, you can keep/add them here #}
+    <hr> <!-- Optional separator -->
+    <p style="text-align:center;"><a href="{{ url_for('my_performance') }}">View My Performance Summary</a></p>
+
+
+</div> {# End of container #}
+{% endblock %}

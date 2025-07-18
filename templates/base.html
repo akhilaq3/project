@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Default Title - Can be overridden by child templates -->
+    <title>{% block title %}E-learning platform and personalized student performance tracker{% endblock %}</title>
+    <!-- Link the main stylesheet HERE -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Block for any page-specific head elements (like extra CSS/JS) -->
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+    <!-- Site Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <!-- Display the main site title visibly -->
+            <div class="site-branding">
+                <a href="{{ url_for('dashboard' if 'user_id' in session else 'login') }}"> <!-- Link to dashboard if logged in, else login -->
+                    E-learning platform and personalized student performance tracker
+                </a>
+            </div>
+            <nav class="site-navigation">
+                <!-- Basic Navigation (Example) -->
+                {% if 'user_id' in session %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('my_performance') }}">My Performance</a>
+                    <a href="{{ url_for('logout') }}">Logout ({{ session.username }})</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Flash Messages Area - Moved to base template -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <!-- Wrap messages in a container so they are centered like other content -->
+            <div class="container flash-container">
+                <ul class="flashes">
+                {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Where page-specific content will be injected -->
+        {% block content %}
+            <!-- Child templates will replace this block -->
+        {% endblock %}
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© {{ now.strftime('%Y') }} Your E-Learning Platform. All rights reserved.</p>
+             <!-- Add 'now' function to Jinja environment in app.py if not already available -->
+        </div>
+    </footer>
+
+    <!-- Block for JavaScript files if needed later -->
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

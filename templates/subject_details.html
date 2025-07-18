@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Subject: {{ subject }} | {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="container"> {# Use standard container #}
+
+    {# Flash messages handled by base.html #}
+
+    {# Headings use standard H1/H2 styles from style.css #}
+    <h1>Year {{ year }} - Semester {{ semester }}</h1>
+    <h2>Subject: {{ subject }}</h2>
+
+    {% if course %}
+        <h3>Course Materials & Quizzes</h3>
+
+        {% set unit_found = false %} {# Flag to check if ANY unit content was displayed #}
+
+        {# Loop through units 1 to 5 #}
+        {% for i in range(1, 6) %}
+            {% set unit_link_col = 'unit' ~ i ~ '_link' %}
+            {% set unit_name_col = 'unit' ~ i ~ '_name' %}
+
+            {# Check if column exists and has a non-whitespace value #}
+            {% if course[unit_link_col] and course[unit_link_col] | trim %}
+                {% set unit_found = true %}
+                {# Apply the unit-section class #}
+                <div class="unit-section">
+                    {% set current_unit_name = course[unit_name_col] if course[unit_name_col] and course[unit_name_col]|trim else ('Unit ' + i|string) %}
+                    <h4>
+                        Unit {{ i }}: {{ current_unit_name }}
+                    </h4>
+                    <p>
+                         Link: <a href="{{ course[unit_link_col] }}" target="_blank" rel="noopener noreferrer">Open Link</a>
+                    </p>
+                    <p>
+                        {# Style the quiz link like a button #}
+                        <a href="{{ url_for('quiz', year=year, semester=semester, subject=subject, unit=i) }}" class="button-link">
+                            Take Quiz for Unit {{ i }}
+                        </a>
+                    </p>
+                </div> {# End unit-section #}
+            {% endif %} {# End check for unit link #}
+        {% endfor %} {# End of unit loop #}
+
+        {# Show message if no units were found at all #}
+        {% if not unit_found %}
+             <p class="content-not-found">No unit materials or quiz links found for this subject in the database.</p>
+        {% endif %}
+
+        {# Apply the references-section class #}
+        <div class="references-section">
+            <h4>Textbook References:</h4>
+            {% if course['referencebooks'] and course['referencebooks'] | trim %}
+                 {# Use replace filter for newlines and safe filter for HTML #}
+                <p>{{ course['referencebooks'] | replace('\n', '<br>') | safe }}</p>
+            {% else %}
+                <p class="content-not-found">No specific textbook references provided.</p>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p class="content-not-found">Subject content details could not be loaded for "{{ subject }}". Please check the subject name or contact support.</p>
+    {% endif %} {# End if course #}
+
+     {# Use standard back link style #}
+     <div class="subject-details-back-link-container"> {# Optional wrapper for centering #}
+        <a class="back-link" href="{{ url_for('semester_view', year_num=year, semester_num=semester) }}">
+            « Back to Semester {{ semester }} Subjects
+        </a>
+     </div>
+
+</div> {# End container #}
+{% endblock %}
