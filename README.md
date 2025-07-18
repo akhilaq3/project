@@ -1,5 +1,3 @@
-# E-Learning platform and Personalized Student Performance Tracker
-Your Gateway to focused and organized learning
 # E-Learning Platform & Student Performance Tracker
 
 
@@ -84,5 +82,5 @@ Contributions are welcome and appreciated!
 ## 📧 Contact
 
 Akhila Vanam – [akhilaq3@gmail.com.com]  
-Project Link: [https://github.com/your-username/e-learning-tracker](https://github.com/akhilaq3/e-learning-tracker)
+Project Link: [https://github.com/your-username/e-learning-tracker](https://github.com/akhilaq3/project)
 
