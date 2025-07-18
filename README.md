@@ -2,17 +2,12 @@
 Your Gateway to focused and organized learning
 # E-Learning Platform & Student Performance Tracker
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![GitHub issues](https://img.shields.io/github/issues/your-username/e-learning-tracker)](https://github.com/your-username/e-learning-tracker/issues)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/e-learning-tracker)](https://github.com/your-username/e-learning-tracker/network)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/e-learning-tracker)](https://github.com/your-username/e-learning-tracker/stargazers)
 
 > Your gateway to focused, structured, and personalized academic growth.
 
 This is a full-featured academic learning platform built with Python and Flask. It provides students with organized course content, interactive quizzes, and a personalized dashboard to track their academic progress.
 
-![App Screenshot](https://your-link-to-screenshot.png)
-*(Add a screenshot of your dashboard or quiz results page!)*
+
 
 ## The Mission
 
@@ -84,12 +79,10 @@ Contributions are welcome and appreciated!
 4.  Push to the Branch (`git push origin feature/YourFeature`)  
 5.  Open a Pull Request  
 
-## 📄 License
 
-This project is licensed under the MIT License. See the `LICENSE.md` file for details.
 
 ## 📧 Contact
 
-Akhila Vanam – [your.email@example.com]  
-Project Link: [https://github.com/your-username/e-learning-tracker](https://github.com/your-username/e-learning-tracker)
+Akhila Vanam – [akhilaq3@gmail.com.com]  
+Project Link: [https://github.com/your-username/e-learning-tracker](https://github.com/akhilaq3/e-learning-tracker)
 
